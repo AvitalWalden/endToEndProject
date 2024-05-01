@@ -29,9 +29,9 @@ async function getUser(id) {
 
 async function createUser(name, email, street, city, zipcode, phone) {
     try {
-        const sql = "INSERT INTO users (`name`, `email`,`street`, `city`,`zipcode`, `phone`) VALUES(?, ?, ?, ?, ?, ?)";
+        const sql = "INSERT INTO users (`name`, `username`, `email`,`street`, `city`,`zipcode`, `phone`) VALUES(?, ?, ?, ?, ?, ?)";
 
-        const result = await pool.query(sql, [name, , email, street, city, zipcode, phone]);
+        const result = await pool.query(sql, [name, username, email, street, city, zipcode, phone]);
 
         return result[0];
 
@@ -49,10 +49,11 @@ async function deleteUser(id) {
         throw err;
     }
 }
-async function updateUser(id, name, email, street, city, zipcode, phone) {
+
+async function updateUser(id, name, username, email, street, city, zipcode, phone) {
     try {
-        const sql = `UPDATE users SET name = ?, email = ?, street = ?, city = ?, zipcode = ?, phone  = ? WHERE id = ?`;
-        const result = await pool.query(sql, [name, email, street, city, zipcode, phone, id]);
+        const sql = `UPDATE users SET name = ?, username = ?, email = ?, street = ?, city = ?, zipcode = ?, phone  = ? WHERE id = ?`;
+        const result = await pool.query(sql, [name, username, email, street, city, zipcode, phone, id]);
         return result;
     } catch (err) {
         console.error('Error updating branch:', err);
