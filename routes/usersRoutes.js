@@ -16,13 +16,10 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        console.log(req.body.name)
-
         const response = await createUser(req.body.name, req.body.username, req.body.email, req.body.street, req.body.city, req.body.zipcode, req.body.phone)
-        console.log(response)
-
-        res.send(await getUser(response.id));
+        res.send(await getUser(response.insertId));
     } catch (err) {
+        console.log("Error")
         //res.sendFile(path.join(__dirname, '../public', 'error.html'));
     }
 });
