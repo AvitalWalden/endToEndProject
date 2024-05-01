@@ -109,4 +109,4 @@ INSERT INTO comments (post_id, name, email, body) VALUES
 (7, 'Grace', 'grace@example.com', 'Your vacation sounds incredible!'),
 (8, 'Hannah', 'hannah@example.com', 'Insightful analysis.'),
 (9, 'Ian', 'ian@example.com', 'Great advice, thanks!'),
-(10, 'Julia', 'julia@example.com', 'These tips really helped me organize my space!.');
+(10, 'Julia', 'julia@example.com', 'These tips really helped me organize my space.');
