@@ -1,7 +1,6 @@
 /* Create the database */
 CREATE DATABASE  IF NOT EXISTS postDB;
 
-/* Switch to the classicmodels database */
 USE postDB;
 
 CREATE TABLE users (
@@ -20,21 +19,6 @@ CREATE TABLE passwords (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE albums (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT not null,
-    title VARCHAR(255)
-);
-CREATE TABLE photos (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    albumId INT not null,
-    title VARCHAR(255),
-    url VARCHAR(255) not null,
-    thumbnailUrl VARCHAR(255) not null,
-    FOREIGN KEY (albumId) REFERENCES albums(id)
-);
-
-
 CREATE TABLE todos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT not null,
@@ -42,8 +26,6 @@ CREATE TABLE todos (
     completed BOOL not null,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
-
 
 CREATE TABLE posts (
     id INT AUTO_INCREMENT PRIMARY KEY,
