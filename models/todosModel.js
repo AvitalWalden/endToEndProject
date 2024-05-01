@@ -30,7 +30,7 @@ async function getTodos() {
 
   async function createTodo(user_id, title, completed) {
     try {
-      const sql = "INSERT INTO branches (`user_id`, `title`,`completed`) VALUES(?, ?, ?)";
+      const sql = "INSERT INTO todos (`user_id`, `title`,`completed`) VALUES(?, ?, ?)";
       ;
   
       const result = await pool.query(sql,[user_id, title, completed]);

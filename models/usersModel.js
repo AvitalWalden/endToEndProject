@@ -27,9 +27,9 @@ async function getUser(id) {
     }
 }
 
-async function createUser(name, email, street, city, zipcode, phone) {
+async function createUser(name, username, email, street, city, zipcode, phone) {
     try {
-        const sql = "INSERT INTO users (`name`, `username`, `email`,`street`, `city`,`zipcode`, `phone`) VALUES(?, ?, ?, ?, ?, ?)";
+        const sql = "INSERT INTO users (`name`, `username`, `email`,`street`, `city`,`zipcode`, `phone`) VALUES(?, ?, ?, ?, ?, ?, ?)";
 
         const result = await pool.query(sql, [name, username, email, street, city, zipcode, phone]);
 
