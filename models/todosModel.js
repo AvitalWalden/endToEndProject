@@ -53,7 +53,7 @@ async function getTodos() {
   }
   async function updateTodo(user_id, title, completed) {
     try {
-      const sql = `UPDATE branches SET user_id = ?, title = ? WHERE completed = ?`;
+      const sql = `UPDATE todos SET user_id = ?, title = ? WHERE completed = ?`;
       const result = await pool.query(sql, [user_id, title, completed]);
       return result;
     } catch (err) {
