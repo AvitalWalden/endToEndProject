@@ -1,9 +1,9 @@
 const model = require('../models/usersModel');
 
-async function createUser(name, username, email, street, city, zipcode, phone) {
+async function createUser(name, username, email, address_id, phone) {
     try {
         console.log(username);
-        return model.createUser(name, username, email, street, city, zipcode, phone);
+        return model.createUser(name, username, email, address_id, phone);
     } catch (err) {
         throw err;
     }
@@ -34,9 +34,9 @@ async function deleteUser(id) {
         throw err;
     }
 }
-async function updateUser(id, name, username, email, street, city, zipcode, phone) {
+async function updateUser(id, name, username, email, address_id, phone) {
     try {
-        return model.updateUser(id, name, username, email, street, city, zipcode, phone);
+        return model.updateUser(id, name, username, email, address_id, phone);
     } catch (err) {
         throw err;
     }

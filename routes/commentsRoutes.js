@@ -3,6 +3,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const { createComment, getComments, getComment, deleteComment, updateComment } = require('../controllers/commentsController');
+const { createPost, getPosts, getPost, deletePost, updatePost } = require('../controllers/postsController');
 
 router.get("/", async (req, res) => {
     res.send(await getComments());
@@ -16,7 +17,9 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const response = await createComment(req.body.post_id, req.body.name,req.body.email, req.body.body)
+        if (getPost(req.body.post_id) === null)
+            throw new Error("post doesn't exist");
+        const response = await createComment(req.body.post_id, req.body.name, req.body.email, req.body.body)
         res.send(await getComment(response.insertId));
     } catch (err) {
         //res.sendFile(path.join(__dirname, '../public', 'error.html'));
@@ -24,8 +27,11 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+    if (getPost(req.body.post_id) === null)
+    throw new Error("post doesn't exist");
+
     const id = req.params.id;
-    const response = await updateComment(id, req.body.post_id, req.body.name,req.body.email, req.body.body)
+    const response = await updateComment(id, req.body.post_id, req.body.name, req.body.email, req.body.body)
     res.send(await getComment(id));
 });
 

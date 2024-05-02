@@ -4,10 +4,14 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const { createUser, getUsers, getUser, deleteUser, updateUser } = require('../controllers/usersController');
 const { createAddress, getAddresses, getAddress, deleteAddress, updateAddress } = require('../controllers/addressesController');
+const { createPost, getPosts, getPost, deletePost, updatePost } = require('../controllers/postsController');
+const { createTodo, getTodos, getTodo, deleteTodo, updateTodo } = require('../controllers/todosController');
+
+
 
 router.get("/", async (req, res) => {
     const users = await getUsers();
-    const addresses= await getAddresses();
+    const addresses = await getAddresses();
     const usersWithAddress = users.map(user => {
         const userAddress = addresses.find(address => address.id === user.address_id);
         return {
@@ -21,8 +25,8 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     const id = req.params.id;
     const user = await getUser(id);
-    const address= await getAddress(address_id);
-    res.send({...user, ...address});
+    const address = await getAddress(address_id);
+    res.send({ ...user, ...address });
 });
 
 router.post("/", async (req, res) => {
@@ -45,8 +49,29 @@ router.put("/:id", async (req, res) => {
 });
 
 router.delete("/:id", async (req, res) => {
+
+
     const id = req.params.id;
-    const user=await getUser(id);
+
+    const user = await getUser(id);
+
+    //delete the posts of this user
+    const posts = await getPosts();
+    const usersPosts = posts.filter(post => post.user_id === id);
+
+    for (const post of usersPosts) {
+        await deletePost(post.id);
+    }
+
+    //delete the todos of this user
+    const todos = await getTodos();
+    const usersTodos = todos.filter(todo => todo.user_id === id);
+
+    for (const todo of usersTodos) {
+        await deleteTodo(todo.id);
+    }
+
+
     const responseAddress = await deleteAddress(user.address_id);
     const response = await deleteUser(id);
     res.send();
