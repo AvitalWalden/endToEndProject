@@ -51,10 +51,10 @@ async function getTodos() {
       throw err;
     }
   }
-  async function updateTodo(user_id, title, completed) {
+  async function updateTodo(id, user_id, title, completed) {
     try {
-      const sql = `UPDATE todos SET user_id = ?, title = ? WHERE completed = ?`;
-      const result = await pool.query(sql, [user_id, title, completed]);
+      const sql = `UPDATE todos SET user_id = ?, title = ?, completed = ? WHERE id = ?`;
+      const result = await pool.query(sql, [user_id, title, completed, id]);
       return result;
     } catch (err) {
       console.error('Error updating todo:', err);

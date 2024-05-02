@@ -41,8 +41,10 @@ const port = 3000;
 
 const usersRoutes=require("./routes/usersRoutes")
 app.use("/users",usersRoutes);
-// const branchesRouter=require("./routes/branches")
-// app.use("/branches",branchesRouter);
+const todosRoutes=require("./routes/todosRoutes")
+app.use("/todos",todosRoutes);
+const postRoutes=require("./routes/postsRoutes")
+app.use("/posts",postRoutes);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
