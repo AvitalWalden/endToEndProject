@@ -43,8 +43,10 @@ const usersRoutes=require("./routes/usersRoutes")
 app.use("/users",usersRoutes);
 const todosRoutes=require("./routes/todosRoutes")
 app.use("/todos",todosRoutes);
-const postRoutes=require("./routes/postsRoutes")
-app.use("/posts",postRoutes);
+const postsRoutes=require("./routes/postsRoutes")
+app.use("/posts",postsRoutes);
+const addressesRoutes=require("./routes/addressesRoutes")
+app.use("/addresses",addressesRoutes);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
