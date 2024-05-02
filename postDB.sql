@@ -8,10 +8,16 @@ CREATE TABLE users (
     name VARCHAR(255) not null,
     username VARCHAR(255) not null,
     email VARCHAR(255) not null,
-    street VARCHAR(255),
+    address_id INT NOT NULL,
+    phone VARCHAR(255),
+    FOREIGN KEY (address_id) REFERENCES address(id)
+);
+
+CREATE TABLE addresses (
+    id INT AUTO_INCREMENT PRIMARY KEY ,
     city VARCHAR(255),
-    zipcode VARCHAR(255),
-    phone VARCHAR(255)
+    street VARCHAR(255),
+    zipcode VARCHAR(255)
 );
 
 CREATE TABLE passwords (
@@ -45,19 +51,33 @@ CREATE TABLE comments (
     FOREIGN KEY (post_id) REFERENCES posts(id)
 );
 
--- Users table
-INSERT INTO users (name, username, email, street, city, zipcode, phone) VALUES
-('John Doe', 'johndoe', 'john@example.com', '123 Main St', 'Anytown', '12345', '123-456-7890'),
-('Jane Smith', 'janesmith', 'jane@example.com', '456 Oak St', 'Somewhere', '67890', '987-654-3210'),
-('Alice Johnson', 'alicej', 'alice@example.com', '789 Elm St', 'Nowhere', '54321', '555-123-4567'),
-('Bob Brown', 'bobbrown', 'bob@example.com', '321 Pine St', 'Anywhere', '98765', '999-888-7777'),
-('Emily Davis', 'emilyd', 'emily@example.com', '654 Maple St', 'Elsewhere', '45678', '333-222-1111'),
-('Michael Wilson', 'michaelw', 'michael@example.com', '987 Cedar St', 'Everywhere', '87654', '777-888-9999'),
-('Sarah Lee', 'sarahlee', 'sarah@example.com', '741 Birch St', 'Nowhere', '34567', '111-222-3333'),
-('David Martinez', 'davidm', 'david@example.com', '852 Walnut St', 'Anywhere', '76543', '444-555-6666'),
-('Olivia Garcia', 'oliviag', 'olivia@example.com', '963 Fir St', 'Everywhere', '23456', '666-555-4444'),
-('James Rodriguez', 'jamesr', 'james@example.com', '159 Spruce St', 'Somewhere', '87654', '222-333-4444');
 
+INSERT INTO addresses (city, street, zipcode)
+VALUES
+('Anytown', '123 Main St', '12345'),
+('Somewhere', '456 Oak St', '67890'),
+( 'Nowhere', '789 Elm St', '54321'),
+('Anywhere', '321 Pine St', '98765'),
+( 'Elsewhere','654 Maple St', '45678'),
+( 'Everywhere', '987 Cedar St', '87654'),
+( 'Nowhere', '741 Birch St', '34567'),
+('Anywhere', '852 Walnut St', '76543'),
+( 'Everywhere', '963 Fir St', '23456'),
+(  'Somewhere', '159 Spruce St', '87654');
+
+-- טבלת המשתמשים
+INSERT INTO users (name, username, email, address_id, phone)
+VALUES
+('John Doe', 'johndoe', 'john@example.com', 1, '123-456-7890'),
+('Jane Smith', 'janesmith', 'jane@example.com', 2, '987-654-3210'),
+('Alice Johnson', 'alicej', 'alice@example.com', 3, '555-123-4567'),
+('Bob Brown', 'bobbrown', 'bob@example.com', 4, '999-888-7777'),
+('Emily Davis', 'emilyd', 'emily@example.com', 5, '333-222-1111'),
+('Michael Wilson', 'michaelw', 'michael@example.com', 6, '777-888-9999'),
+('Sarah Lee', 'sarahlee', 'sarah@example.com', 7, '111-222-3333'),
+('David Martinez', 'davidm', 'david@example.com', 8, '444-555-6666'),
+('Olivia Garcia', 'oliviag', 'olivia@example.com', 9, '666-555-4444'),
+('James Rodriguez', 'jamesr', 'james@example.com', 10, '222-333-4444');
 
 -- Passwords table
 INSERT INTO passwords (user_id, password) VALUES
