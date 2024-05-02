@@ -15,8 +15,8 @@ CREATE TABLE users (
 
 CREATE TABLE addresses (
     id INT AUTO_INCREMENT PRIMARY KEY ,
-    street VARCHAR(255),
     city VARCHAR(255),
+    street VARCHAR(255),
     zipcode VARCHAR(255)
 );
 
@@ -52,18 +52,18 @@ CREATE TABLE comments (
 );
 
 
-INSERT INTO addresses (street, city, zipcode)
+INSERT INTO addresses (city, street, zipcode)
 VALUES
-('123 Main St', 'Anytown', '12345'),
-('456 Oak St', 'Somewhere', '67890'),
-('789 Elm St', 'Nowhere', '54321'),
-('321 Pine St', 'Anywhere', '98765'),
-('654 Maple St', 'Elsewhere', '45678'),
-('987 Cedar St', 'Everywhere', '87654'),
-('741 Birch St', 'Nowhere', '34567'),
-('852 Walnut St', 'Anywhere', '76543'),
-('963 Fir St', 'Everywhere', '23456'),
-('159 Spruce St', 'Somewhere', '87654');
+('Anytown', '123 Main St', '12345'),
+('Somewhere', '456 Oak St', '67890'),
+( 'Nowhere', '789 Elm St', '54321'),
+('Anywhere', '321 Pine St', '98765'),
+( 'Elsewhere','654 Maple St', '45678'),
+( 'Everywhere', '987 Cedar St', '87654'),
+( 'Nowhere', '741 Birch St', '34567'),
+('Anywhere', '852 Walnut St', '76543'),
+( 'Everywhere', '963 Fir St', '23456'),
+(  'Somewhere', '159 Spruce St', '87654');
 
 -- טבלת המשתמשים
 INSERT INTO users (name, username, email, address_id, phone)
