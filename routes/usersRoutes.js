@@ -7,7 +7,7 @@ const { createAddress, getAddresses, getAddress, deleteAddress, updateAddress } 
 
 router.get("/", async (req, res) => {
     const users = await getUsers();
-    const addresses= await getAddress();
+    const addresses= await getAddresses();
     const usersWithAddress = users.map(user => {
         const userAddress = addresses.find(address => address.id === user.address_id);
         return {
@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const addressResponse = await createAddress(req.body.street, req.body.city, req.body.zipcode);
+        const addressResponse = await createAddress(req.body.city, req.body.street, req.body.zipcode);
         const response = await createUser(req.body.name, req.body.username, req.body.email, addressResponse.id, req.body.phone);
 
         res.send(await getUser(response.insertId));
@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
     const id = req.params.id;
-    const addressResponse = await createAddress(req.body.street, req.body.city, req.body.zipcode);
+    const addressResponse = await updateAddress(req.body.city, req.body.street, req.body.zipcode);
     const response = await updateUser(id, req.body.name, req.body.username, req.body.email, addressResponse.id, req.body.phone)
     res.send(await getUser(id));
 });

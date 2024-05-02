@@ -10,7 +10,7 @@ CREATE TABLE users (
     email VARCHAR(255) not null,
     address_id INT NOT NULL,
     phone VARCHAR(255),
-    FOREIGN KEY (address_id) REFERENCES address(id)
+    FOREIGN KEY (address_id) REFERENCES addresses(id)
 );
 
 CREATE TABLE addresses (
