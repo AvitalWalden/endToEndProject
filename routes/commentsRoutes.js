@@ -3,7 +3,7 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const { createComment, getComments, getComment, deleteComment, updateComment } = require('../controllers/commentsController');
-const { createPost, getPosts, getPost, deletePost, updatePost } = require('../controllers/postsController');
+const {getPost } = require('../controllers/postsController');
 
 router.get("/", async (req, res) => {
     res.send(await getComments());
@@ -27,7 +27,8 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-    if (getPost(req.body.post_id) === null)
+    console.log(getPost(req.body.post_id) );
+    if (getPost(req.body.post_id) == null)
     throw new Error("post doesn't exist");
 
     const id = req.params.id;

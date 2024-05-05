@@ -3,6 +3,8 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const { createTodo, getTodos, getTodo, deleteTodo, updateTodo } = require('../controllers/todosController');
+const { getUser } = require("../controllers/usersController");
+
 
 router.get("/", async (req, res) => {
     res.send(await getTodos());

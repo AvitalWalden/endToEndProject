@@ -4,9 +4,8 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const { createUser, getUsers, getUser, deleteUser, updateUser } = require('../controllers/usersController');
 const { createAddress, getAddresses, getAddress, deleteAddress, updateAddress } = require('../controllers/addressesController');
-const { createPost, getPosts, getPost, deletePost, updatePost } = require('../controllers/postsController');
-const { createTodo, getTodos, getTodo, deleteTodo, updateTodo } = require('../controllers/todosController');
-
+const { getPosts, deletePost } = require('../controllers/postsController');
+const { getTodos, deleteTodo } = require('../controllers/todosController');
 
 
 router.get("/", async (req, res) => {
@@ -14,9 +13,12 @@ router.get("/", async (req, res) => {
     const addresses = await getAddresses();
     const usersWithAddress = users.map(user => {
         const userAddress = addresses.find(address => address.id === user.address_id);
+        delete user.address_id;
+        delete userAddress.id;
+
         return {
             ...user,
-            address: userAddress ? userAddress.address : 'Address not found'
+            address: { ...userAddress }
         };
     });
     res.send(usersWithAddress);
@@ -25,15 +27,16 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     const id = req.params.id;
     const user = await getUser(id);
-    const address = await getAddress(address_id);
-    res.send({ ...user, ...address });
+    const address = await getAddress(user.address_id);
+    delete user.address_id;
+    delete address.id;
+    res.send({ ...user, address: { ...address } });
 });
 
 router.post("/", async (req, res) => {
     try {
-        const addressResponse = await createAddress(req.body.city, req.body.street, req.body.zipcode);
-        const response = await createUser(req.body.name, req.body.username, req.body.email, addressResponse.id, req.body.phone);
-
+        const addressResponse = await createAddress(req.body.address.city, req.body.address.street, req.body.address.zipcode);
+        const response = await createUser(req.body.name, req.body.username, req.body.email, addressResponse.insertId, req.body.phone);
         res.send(await getUser(response.insertId));
     } catch (err) {
         console.log("Error")
@@ -42,38 +45,42 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
+
     const id = req.params.id;
-    const addressResponse = await updateAddress(req.body.city, req.body.street, req.body.zipcode);
-    const response = await updateUser(id, req.body.name, req.body.username, req.body.email, addressResponse.id, req.body.phone)
-    res.send(await getUser(id));
+    const user = await getUser(id);
+    const addressResponse = await updateAddress(user.address_id, req.body.address.city, req.body.address.street, req.body.address.zipcode);
+    const response = await updateUser(id, req.body.name, req.body.username, req.body.email, user.address_id, req.body.phone);
+    const userAfterChange = await getUser(id);
+    const addressAfterChange = await getAddress(userAfterChange.address_id);
+    delete userAfterChange.address_id;
+    delete addressAfterChange.id;
+    res.send({ ...userAfterChange, address: { ...addressAfterChange } });
 });
 
+
 router.delete("/:id", async (req, res) => {
-
-
     const id = req.params.id;
-
     const user = await getUser(id);
-
-    //delete the posts of this user
-    const posts = await getPosts();
-    const usersPosts = posts.filter(post => post.user_id === id);
-
-    for (const post of usersPosts) {
-        await deletePost(post.id);
-    }
 
     //delete the todos of this user
     const todos = await getTodos();
-    const usersTodos = todos.filter(todo => todo.user_id === id);
+    console.log(todos);
 
+    const usersTodos = todos.filter(todo => todo.user_id === parseInt(id));
+    console.log(usersTodos);
     for (const todo of usersTodos) {
         await deleteTodo(todo.id);
     }
 
+    //delete the posts of this user
+    const posts = await getPosts();
+    const usersPosts = posts.filter(post => post.user_id === parseInt(id));
+    for (const post of usersPosts) {
+        await deletePost(post.id);
+    }
 
-    const responseAddress = await deleteAddress(user.address_id);
     const response = await deleteUser(id);
+    const responseAddress = await deleteAddress(user.address_id);
     res.send();
 });
 

@@ -44,7 +44,7 @@ app.use("/users",usersRoutes);
 const todosRoutes=require("./routes/todosRoutes")
 app.use("/todos",todosRoutes);
 const commentsRoutes=require("./routes/commentsRoutes")
-app.use("/users",commentsRoutes);
+app.use("/comments",commentsRoutes);
 const postRoutes=require("./routes/postsRoutes")
 app.use("/posts",postRoutes);
 app.listen(port, () => {

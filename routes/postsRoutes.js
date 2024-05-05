@@ -3,8 +3,8 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const { createPost, getPosts, getPost, deletePost, updatePost } = require('../controllers/postsController');
-const { createComment, getComments, getComment, deleteComment, updateComment } = require('../controllers/commentsController');
-const { getUser } = require("../models/usersModel");
+const { getComments, deleteComment} = require('../controllers/commentsController');
+const { getUser } = require("../controllers/usersController");
 
 
 router.get("/", async (req, res) => {
@@ -43,7 +43,7 @@ router.delete("/:id", async (req, res) => {
 
    //delete the comments of this post
    const comments = await getComments();
-   const postsComments = comments.filter(comment => comment.post_id === id);
+   const postsComments = comments.filter(comment => comment.post_id === parseInt(id));
 
    for (const comment of postsComments) {
        await deleteComment(comment.id);

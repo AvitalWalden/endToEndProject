@@ -2,7 +2,6 @@ const model = require('../models/usersModel');
 
 async function createUser(name, username, email, address_id, phone) {
     try {
-        console.log(username);
         return model.createUser(name, username, email, address_id, phone);
     } catch (err) {
         throw err;
