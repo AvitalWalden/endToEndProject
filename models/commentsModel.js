@@ -5,7 +5,7 @@ async function getComments() {
       const sql = 'SELECT * FROM comments';
   
       const [rows, fields] = await pool.query(sql);
-      console.log(rows);
+      // console.log(rows);
   
       return rows;
     } catch (err) {

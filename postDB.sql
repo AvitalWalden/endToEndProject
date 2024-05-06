@@ -3,6 +3,13 @@ CREATE DATABASE  IF NOT EXISTS postDB;
 
 USE postDB;
 
+CREATE TABLE addresses (
+    id INT AUTO_INCREMENT PRIMARY KEY ,
+    city VARCHAR(255),
+    street VARCHAR(255),
+    zipcode VARCHAR(255)
+);
+
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY ,
     name VARCHAR(255) not null,
@@ -13,17 +20,10 @@ CREATE TABLE users (
     FOREIGN KEY (address_id) REFERENCES addresses(id)
 );
 
-CREATE TABLE addresses (
-    id INT AUTO_INCREMENT PRIMARY KEY ,
-    city VARCHAR(255),
-    street VARCHAR(255),
-    zipcode VARCHAR(255)
-);
-
 CREATE TABLE passwords (
-    user_id INT primary key,
+    id INT primary key,
     password VARCHAR(255) not null,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    FOREIGN KEY (id) REFERENCES users(id)
 );
 
 CREATE TABLE todos (
@@ -62,8 +62,8 @@ VALUES
 ( 'Everywhere', '987 Cedar St', '87654'),
 ( 'Nowhere', '741 Birch St', '34567'),
 ('Anywhere', '852 Walnut St', '76543'),
-( 'Everywhere', '963 Fir St', '23456'),
-(  'Somewhere', '159 Spruce St', '87654');
+('Everywhere', '963 Fir St', '23456'),
+('Somewhere', '159 Spruce St', '87654');
 
 -- טבלת המשתמשים
 INSERT INTO users (name, username, email, address_id, phone)
@@ -80,7 +80,7 @@ VALUES
 ('James Rodriguez', 'jamesr', 'james@example.com', 10, '222-333-4444');
 
 -- Passwords table
-INSERT INTO passwords (user_id, password) VALUES
+INSERT INTO passwords (id, password) VALUES
 (1, 'password1'),
 (2, 'password2'),
 (3, 'password3'),

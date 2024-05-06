@@ -1,8 +1,19 @@
 const model = require('../models/usersModel');
 
-async function createUser(name, username, email, address_id, phone) {
+async function createUser(name, username, email, city, street, zipcode, phone, password) {
     try {
-        return model.createUser(name, username, email, address_id, phone);
+       // const hashedPassword = await bcrypt.hash(password, 10); 
+        return model.createUser(name, username, email, city, street, zipcode, phone, password);
+    } catch (err) {
+        throw err;
+    }
+
+}
+
+async function logIn(userName,password) {
+    try {
+        return model.logIn(userName,password);
+        
     } catch (err) {
         throw err;
     }
@@ -33,11 +44,12 @@ async function deleteUser(id) {
         throw err;
     }
 }
-async function updateUser(id, name, username, email, address_id, phone) {
+async function updateUser(id, name, username, email,address_id, city, street, zipcode, phone) {
     try {
-        return model.updateUser(id, name, username, email, address_id, phone);
+
+        return model.updateUser(id, name, username, email, address_id, city, street, zipcode, phone);
     } catch (err) {
         throw err;
     }
 }
-module.exports = { createUser, getUsers, getUser , deleteUser, updateUser}
+module.exports = { createUser, getUsers, getUser , deleteUser, updateUser, logIn}

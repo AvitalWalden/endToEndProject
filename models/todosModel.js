@@ -5,7 +5,6 @@ async function getTodos() {
       const sql = 'SELECT * FROM todos';
   
       const [rows, fields] = await pool.query(sql);
-      console.log(rows);
   
       return rows;
     } catch (err) {
