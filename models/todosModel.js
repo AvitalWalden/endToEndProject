@@ -1,12 +1,11 @@
 const pool = require('../DB.js');
 
-async function getTodos() {
+async function getTodos(id) {
     try {
-      const sql = 'SELECT * FROM todos';
+      const sql = 'SELECT * FROM todos where user_id =?';
   
-      const [rows, fields] = await pool.query(sql);
-  
-      return rows;
+      const result = await pool.query(sql,[id]);
+      return result[0];
     } catch (err) {
       console.log(err);
     }

@@ -1,8 +1,16 @@
 const model = require('../models/usersModel');
+// const bcrypt = require('bcrypt');
+
 
 async function createUser(name, username, email, city, street, zipcode, phone, password) {
     try {
-       // const hashedPassword = await bcrypt.hash(password, 10); 
+        // bcrypt.hash(password, 10, function(err, hashedPassword) {
+        //     if (err) {
+        //         console.error("שגיאה בזמן הצפנת הסיסמה:", err);
+        //         return;
+        //     }
+        //     return model.createUser(name, username, email, city, street, zipcode, phone, hashedPassword);
+        // });
         return model.createUser(name, username, email, city, street, zipcode, phone, password);
     } catch (err) {
         throw err;

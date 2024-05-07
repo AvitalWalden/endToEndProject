@@ -1,14 +1,11 @@
 const pool = require('../DB.js');
 
-async function getComments() {
+async function getComments(post_id) {
     try {
-      const sql = 'SELECT * FROM comments';
-  
-      const [rows, fields] = await pool.query(sql);
-      // console.log(rows);
-  
-      return rows;
-    } catch (err) {
+      const sql = 'SELECT * FROM comments where post_id=?';
+      const result = await pool.query(sql, [post_id]);
+      return result[0];
+      } catch (err) {
       console.log(err);
     }
   
@@ -52,10 +49,10 @@ async function getComments() {
     }
   }
 
-  async function updateComment(id, post_id, name, email, body) {
+  async function updateComment(id, name, body) {
     try {
-      const sql = `UPDATE comments SET post_id = ?, name = ?, email = ?, body = ? WHERE id = ?`;
-      const result = await pool.query(sql, [post_id, name, email, body, id]);
+      const sql = `UPDATE comments SET name = ?, body = ? WHERE id = ?`;
+      const result = await pool.query(sql, [ name, body, id]);
       return result;
     } catch (err) {
       console.error('Error updating comment:', err);

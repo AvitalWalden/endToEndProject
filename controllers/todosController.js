@@ -9,9 +9,9 @@ async function createTodo(user_id, title, completed) {
 
 }
 
-async function getTodos() {
+async function getTodos(id) {
     try {
-        return model.getTodos();
+        return model.getTodos(id);
     } catch (err) {
         throw err;
     }

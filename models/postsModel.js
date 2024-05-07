@@ -1,12 +1,24 @@
 const pool = require('../DB.js');
 
-async function getPosts() {
+async function getPostsByUserID(id) {
+    try {
+      const sql = 'SELECT * FROM posts where user_id =?';
+      const result = await pool.query(sql,[id]);
+      console.log(result[0]);
+
+      return result[0];
+    } catch (err) {
+      console.log(err);
+    }
+  
+  }
+
+  async function getPosts() {
     try {
       const sql = 'SELECT * FROM posts';
-  
-      const [rows, fields] = await pool.query(sql);
-      // console.log(rows);
-  
+      const [rows, fields] = await pool.query(sql); 
+      console.log("result");
+ 
       return rows;
     } catch (err) {
       console.log(err);
@@ -62,4 +74,4 @@ async function getPosts() {
     }
   }
 
-  module.exports = {updatePost, getPosts, getPost, deletePost, createPost} 
+  module.exports = {updatePost, getPosts, getPost, deletePost, createPost,getPostsByUserID} 

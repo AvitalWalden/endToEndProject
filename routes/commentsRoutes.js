@@ -4,9 +4,12 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const { createComment, getComments, getComment, deleteComment, updateComment } = require('../controllers/commentsController');
 const {getPost } = require('../controllers/postsController');
+const cors = require('cors'); 
+router.use(cors());
 
 router.get("/", async (req, res) => {
-    res.send(await getComments());
+    const post_id = req.query.postId;
+    res.send(await getComments(post_id));
 })
 
 router.get("/:id", async (req, res) => {
@@ -27,12 +30,8 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-    console.log(getPost(req.body.post_id) );
-    if (getPost(req.body.post_id) == null)
-    throw new Error("post doesn't exist");
-
     const id = req.params.id;
-    const response = await updateComment(id, req.body.post_id, req.body.name, req.body.email, req.body.body)
+    const response = await updateComment(id, req.body.name, req.body.body)
     res.send(await getComment(id));
 });
 

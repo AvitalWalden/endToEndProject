@@ -2,13 +2,26 @@ const express = require("express");
 const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
-const { createPost, getPosts, getPost, deletePost, updatePost } = require('../controllers/postsController');
+const { createPost, getPosts, getPost, deletePost, updatePost ,getPostsByUserID} = require('../controllers/postsController');
 const { getComments, deleteComment} = require('../controllers/commentsController');
 const { getUser } = require("../controllers/usersController");
+const cors = require('cors'); 
+router.use(cors());
 
 
 router.get("/", async (req, res) => {
-    res.send(await getPosts());
+    const user_id = req.query.userId;
+    console.log(user_id);
+    if(!user_id){
+        console.log("gfhfg");
+
+        res.send(await getPosts());
+    }
+    // else{
+    //     console.log("bbb");
+
+    //     res.send(await getPostsByUserID(user_id));
+    // }
 })
 
 router.get("/:id", async (req, res) => {

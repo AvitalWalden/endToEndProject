@@ -9,6 +9,16 @@ async function createPost(user_id, title, body) {
 
 }
 
+async function getPostsByUserID(id) {
+    try {
+        console.log("ukjkgh")
+        return model.getPostsByUserID(id);
+    } catch (err) {
+        throw err;
+    }
+
+}
+
 async function getPosts() {
     try {
         return model.getPosts();
@@ -17,7 +27,6 @@ async function getPosts() {
     }
 
 }
-
 async function getPost(id) {
     try {
         return model.getPost(id);
@@ -40,4 +49,4 @@ async function updatePost(id, user_id, title, body) {
         throw err;
     }
 }
-module.exports = { createPost, getPosts, getPost , deletePost, updatePost}
+module.exports = { createPost, getPosts, getPost , deletePost, updatePost,getPostsByUserID}

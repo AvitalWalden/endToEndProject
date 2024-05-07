@@ -4,10 +4,12 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const { createTodo, getTodos, getTodo, deleteTodo, updateTodo } = require('../controllers/todosController');
 const { getUser } = require("../controllers/usersController");
-
+const cors = require('cors'); 
+router.use(cors());
 
 router.get("/", async (req, res) => {
-    res.send(await getTodos());
+    const user_id = req.query.userId;
+    res.send(await getTodos(user_id));
 })
 
 router.get("/:id", async (req, res) => {
@@ -18,9 +20,6 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        if (getUser(req.body.user_id) === null)
-            throw new Error("user doesn't exist");
-
         const response = await createTodo(req.body.user_id, req.body.title, req.body.completed)
         res.send(await getTodo(response.insertId));
     } catch (err) {

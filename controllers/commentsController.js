@@ -8,9 +8,9 @@ async function createComment(post_id, name, email, body) {
     }
 }
 
-async function getComments() {
+async function getComments(post_id) {
     try {
-        return model.getComments();
+        return model.getComments(post_id);
     } catch (err) {
         throw err;
     }
@@ -32,9 +32,9 @@ async function deleteComment(id) {
         throw err;
     }
 }
-async function updateComment(id, post_id, name, email, body) {
+async function updateComment(id, name, body) {
     try {
-        return model.updateComment(id, post_id, name, email, body);
+        return model.updateComment(id, name, body);
     } catch (err) {
         throw err;
     }

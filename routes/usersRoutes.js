@@ -23,6 +23,7 @@ router.get("/:id", async (req, res) => {
     const id = req.params.id;
     const user = await getUser(id);
     delete user.address_id;
+    console.log(user);
     res.send(user);
 });
 
@@ -30,20 +31,19 @@ router.get("/", async (req, res) => {
     const userName = req.query.userName;
     const password = req.query.password;
     let user = await logIn(userName, password);
-    if (user) {
-        delete user.address_id;
+    if (!user) {
+        res.setHeader('Content-Type', 'application/json');
+        return res.json({});
     }
-    console.log(user);
-    res.send(user);
+    userLogIn = await getUser(user.id);
+    delete userLogIn.address_id;
+    res.send(userLogIn);
+    // else{
+    //     res.status(404).send({});
+    // }
+
 });
 
-router.get("/:username", async (req, res) => {
-    const username = req.params.username;
-    const user = await logIn(username);
-
-    delete user.address_id;
-    res.send(user);
-});
 
 router.post("/", async (req, res) => {
     try {
@@ -63,6 +63,8 @@ router.put("/:id", async (req, res) => {
     delete userAfterChange.address_id;
     res.send(userAfterChange);
 });
+
+
 
 
 module.exports = router
