@@ -1,10 +1,17 @@
 /* Create the database */
 CREATE DATABASE  IF NOT EXISTS postDB;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS todos;
+DROP TABLE IF EXISTS passwords;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS addresses;
+
 
 USE postDB;
 
 CREATE TABLE addresses (
-    id INT AUTO_INCREMENT PRIMARY KEY ,
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
     city VARCHAR(255),
     street VARCHAR(255),
     zipcode VARCHAR(255)
@@ -17,7 +24,7 @@ CREATE TABLE users (
     email VARCHAR(255) not null,
     address_id INT NOT NULL,
     phone VARCHAR(255),
-    FOREIGN KEY (address_id) REFERENCES addresses(id)
+    FOREIGN KEY (address_id) REFERENCES addresses(address_id)
 );
 
 CREATE TABLE passwords (
