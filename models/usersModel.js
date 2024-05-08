@@ -24,30 +24,43 @@ async function getUser(id) {
     }
 }
 
-async function createUser(name, username, email, city, street, zipcode, phone, password) {
+async function getUserForSignup(id) {
     try {
-        const sqlAddress = "INSERT INTO addresses (`city`, `street`,`zipcode`) VALUES(?, ?, ?)";
-        const resultAddress = await pool.query(sqlAddress, [city, street, zipcode]);
-        const address_id = resultAddress[0].insertId;
+        const sql = 'SELECT * FROM users where id=?';
+        const result = await pool.query(sql, [id]);
+        return result[0][0];
 
-        const sql = "INSERT INTO users (`name`, `username`, `email`,`address_id`, `phone`) VALUES(?, ?, ?, ?, ?)";
-        const result = await pool.query(sql, [name, username, email, address_id, phone]);
-        const id = result[0].insertId;
-
-        const sqlPassword = "INSERT INTO passwords (`id`,`password`) VALUES(?,?)";
-        const newPassword = await pool.query(sqlPassword, [id, password]);
-        return result[0];
     } catch (err) {
         console.log(err);
     }
 }
 
+async function createUser(username, password) {
+    try {
+        // const sqlAddress = "INSERT INTO addresses (`city`, `street`,`zipcode`) VALUES(?, ?, ?)";
+        // const resultAddress = await pool.query(sqlAddress, [city, street, zipcode]);
+        // const address_id = resultAddress[0].insertId;
+
+        const sql = "INSERT INTO users (`username`) VALUES( ?)";
+        const result = await pool.query(sql, [username]);
+        const id = result[0].insertId;
+
+        const sqlPassword = "INSERT INTO passwords (`id`,`password`) VALUES(?,?)";
+        const newPassword = await pool.query(sqlPassword, [id, password]);
+
+        return result[0];
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
 async function logIn(userName, password) {
     try {
-        const sql = 'SELECT * FROM users natural join passwords where username=? AND password=?';
+        const sql = 'SELECT * FROM users natural join passwords where username=?';
         const result = await pool.query(sql, [userName, password]);
         //if(bcrypt.compare(password, result[0][0].password))
-        return result[0][0];
+        return result[0];
     } catch (err) {
         console.log(err);
     }
@@ -77,4 +90,4 @@ async function updateUser(id, name, username, email, address_id, city, street, z
     }
 }
 
-module.exports = { updateUser, deleteUser, createUser, getUser, getUsers, logIn }
+module.exports = { updateUser, deleteUser, createUser, getUser, getUsers, logIn, getUserForSignup }

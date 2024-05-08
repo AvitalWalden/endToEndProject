@@ -4,7 +4,6 @@ async function getPostsByUserID(id) {
     try {
       const sql = 'SELECT * FROM posts where user_id =?';
       const result = await pool.query(sql,[id]);
-      console.log(result[0]);
 
       return result[0];
     } catch (err) {
@@ -43,7 +42,7 @@ async function getPostsByUserID(id) {
   async function createPost(user_id, title, body) {
     try {
       const sql = "INSERT INTO posts (`user_id`, `title`,`body`) VALUES(?, ?, ?)";
-      ;
+    
   
       const result = await pool.query(sql,[user_id, title, body]);
   

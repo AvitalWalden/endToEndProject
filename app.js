@@ -39,6 +39,9 @@ const port = 3000;
 //   res.send(user);
 // });
 
+
+const loginRoutes=require("./routes/loginRoutes")
+app.use("/login",loginRoutes);
 const usersRoutes=require("./routes/usersRoutes")
 app.use("/users",usersRoutes);
 const todosRoutes=require("./routes/todosRoutes")
