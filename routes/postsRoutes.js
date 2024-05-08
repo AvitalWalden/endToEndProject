@@ -11,10 +11,7 @@ router.use(cors());
 
 router.get("/", async (req, res) => {
     const user_id = req.query.userId;
-    console.log(user_id);
     if(!user_id){
-        console.log("gfhfg");
-
         res.send(await getPosts());
     }
     // else{
@@ -53,9 +50,8 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
     const id = req.params.id;
-
    //delete the comments of this post
-   const comments = await getComments();
+   const comments = await getComments(id);
    const postsComments = comments.filter(comment => comment.post_id === parseInt(id));
 
    for (const comment of postsComments) {

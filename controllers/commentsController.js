@@ -9,6 +9,8 @@ async function createComment(post_id, name, email, body) {
 }
 
 async function getComments(post_id) {
+    console.log("ggggg");
+    console.log(post_id);
     try {
         return model.getComments(post_id);
     } catch (err) {

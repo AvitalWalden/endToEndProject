@@ -23,7 +23,6 @@ router.get("/:id", async (req, res) => {
     const id = req.params.id;
     const user = await getUser(id);
     delete user.address_id;
-    console.log(user);
     res.send(user);
 });
 
