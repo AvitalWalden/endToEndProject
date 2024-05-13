@@ -19,9 +19,12 @@ async function logIn(userName, password) {
             if (match) {
                 return user;
             }
+            else{
+                throw new Error('You are not exist in the system, please sign up');
+            }
         }
         else {
-            return null;
+            throw new Error('You are not exist in the system, please sign up');
         }
     } catch (err) {
         throw err;
