@@ -7,7 +7,7 @@ async function getPostsByUserID(id) {
       return result[0];
     } catch (err) {
       console.log(err);
-      return err;
+      throw err;
     }
   }
 
@@ -18,7 +18,7 @@ async function getPostsByUserID(id) {
       return rows;
     } catch (err) {
       console.log(err);
-      return err;
+      throw err;
     }
   
   }
@@ -30,7 +30,7 @@ async function getPostsByUserID(id) {
       return result[0][0];
     } catch (err) {
       console.log(err); 
-      return err;
+      throw err;
     }
   }
   
@@ -41,6 +41,7 @@ async function getPostsByUserID(id) {
       return result[0];
     } catch (err) {
       console.log(err);
+      throw err;
     }
   }
 

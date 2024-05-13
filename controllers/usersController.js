@@ -7,34 +7,29 @@ async function createUser(username, password) {
         const user = await model.createUser(username, hashedPassword);
         return user;
     } catch (err) {
-        throw err;
+        if (err.sqlMessage == `Duplicate entry '${username}' for key 'users.username'`) {
+            throw new Error('Username is in use')
+        } else {
+            throw err;
+        }
     }
 }
 
 async function logIn(userName, password) {
     try {
-        const user = await model.logIn(userName, password);
+        const user = await model.logIn(userName);
         if (user) {
             const match = await bcrypt.compare(password, user.password);
             if (match) {
                 return user;
             }
-            else{
+            else {
                 throw new Error('You are not exist in the system, please sign up');
             }
         }
         else {
             throw new Error('You are not exist in the system, please sign up');
         }
-    } catch (err) {
-        throw err;
-    }
-
-}
-
-async function getUsers() {
-    try {
-        return model.getUsers();
     } catch (err) {
         throw err;
     }
@@ -57,13 +52,7 @@ async function getUserForSignup(id) {
     }
 }
 
-async function deleteUser(id) {
-    try {
-        return model.deleteUser(id);
-    } catch (err) {
-        throw err;
-    }
-}
+
 async function updateUser(id, name, username, email, city, street, zipcode, phone) {
     try {
 
@@ -72,4 +61,5 @@ async function updateUser(id, name, username, email, city, street, zipcode, phon
         throw err;
     }
 }
-module.exports = { createUser, getUsers, getUser, deleteUser, updateUser, logIn, getUserForSignup }
+
+module.exports = { createUser, getUser, updateUser, logIn, getUserForSignup }

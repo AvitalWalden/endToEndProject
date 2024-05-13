@@ -16,8 +16,11 @@ router.post("/", async (req, res) => {
         res.send(userLogIn);
     }
     catch (err) {
-        console.log(err);
-        res.status(401).send({ error: err });    }
+        const error = {
+            message: err.message
+        }
+        res.status(401).send(error);
+    }
 
 });
 

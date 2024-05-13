@@ -7,7 +7,7 @@ async function getTodos(id) {
       return result[0];
     } catch (err) {
       console.log(err);  
-      return err;
+      throw err;
     }
   
   }
@@ -19,7 +19,7 @@ async function getTodos(id) {
       return result[0][0];
     } catch (err) {
       console.log(err);  
-      return err;
+      throw err;
     }
   }
   
@@ -31,7 +31,7 @@ async function getTodos(id) {
       return result[0];
     } catch (err) {
       console.log(err);
-      return err;
+      throw err;
     }
   }
 

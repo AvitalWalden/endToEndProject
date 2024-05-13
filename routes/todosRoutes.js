@@ -3,19 +3,32 @@ const router = express.Router();
 router.use(express.json());
 router.use(express.urlencoded({ extended: true }));
 const { createTodo, getTodos, getTodo, deleteTodo, updateTodo } = require('../controllers/todosController');
-const { getUser } = require("../controllers/usersController");
-const cors = require('cors'); 
+const cors = require('cors');
 router.use(cors());
 
 router.get("/", async (req, res) => {
-    const user_id = req.query.userId;
-    res.send(await getTodos(user_id));
+    try {
+        const user_id = req.query.userId;
+        res.send(await getTodos(user_id));
+    } catch (err) {
+        const error = {
+            message: err.message
+        }
+        res.status(500).send(error);
+    }
 })
 
 router.get("/:id", async (req, res) => {
-    const id = req.params.id;
-    const todo = await getTodo(id);
-    res.send(todo)
+    try {
+        const id = req.params.id;
+        const todo = await getTodo(id);
+        res.send(todo)
+    } catch (err) {
+        const error = {
+            message: err.message
+        }
+        res.status(500).send(error);
+    }
 });
 
 router.post("/", async (req, res) => {
@@ -23,22 +36,38 @@ router.post("/", async (req, res) => {
         const response = await createTodo(req.body.user_id, req.body.title, req.body.completed)
         res.send(await getTodo(response.insertId));
     } catch (err) {
-        //res.sendFile(path.join(__dirname, '../public', 'error.html'));
+        const error = {
+            message: err.message
+        }
+        res.status(500).send(error);
     }
 });
 
 router.put("/:id", async (req, res) => {
-    if (getUser(req.body.user_id) === null)
-        throw new Error("user doesn't exist");
-    const id = req.params.id;
-    const response = await updateTodo(id, req.body.user_id, req.body.title, req.body.completed)
-    res.send(await getTodo(id));
+    try {
+        const id = req.params.id;
+        await updateTodo(id, req.body.user_id, req.body.title, req.body.completed)
+        res.send(await getTodo(id));
+    } catch (err) {
+        const error = {
+            message: err.message
+        }
+        res.status(500).send(error);
+    }
+
 });
 
 router.delete("/:id", async (req, res) => {
-    const id = req.params.id;
-    const response = await deleteTodo(id);
-    res.send();
+    try{
+        const id = req.params.id;
+        await deleteTodo(id);
+        res.send();
+    }catch (err) {
+        const error = {
+            message: err.message
+        }
+        res.status(500).send(error);
+    }
 });
 
 module.exports = router
