@@ -6,7 +6,6 @@ async function createTodo(user_id, title, completed) {
     } catch (err) {
         throw err;
     }
-
 }
 
 async function getTodos(id) {
@@ -15,7 +14,6 @@ async function getTodos(id) {
     } catch (err) {
         throw err;
     }
-
 }
 
 async function getTodo(id) {

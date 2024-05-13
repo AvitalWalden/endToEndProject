@@ -19,10 +19,10 @@ CREATE TABLE addresses (
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY ,
-    name VARCHAR(255) not null,
-    username VARCHAR(255) not null,
-    email VARCHAR(255) not null,
-    address_id INT NOT NULL,
+    name VARCHAR(255),
+    username VARCHAR(255) not null UNIQUE,
+    email VARCHAR(255),
+    address_id INT,
     phone VARCHAR(255),
     FOREIGN KEY (address_id) REFERENCES addresses(address_id)
 );

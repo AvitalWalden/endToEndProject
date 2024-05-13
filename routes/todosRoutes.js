@@ -30,7 +30,6 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     if (getUser(req.body.user_id) === null)
         throw new Error("user doesn't exist");
-
     const id = req.params.id;
     const response = await updateTodo(id, req.body.user_id, req.body.title, req.body.completed)
     res.send(await getTodo(id));

@@ -4,23 +4,21 @@ async function getPostsByUserID(id) {
     try {
       const sql = 'SELECT * FROM posts where user_id =?';
       const result = await pool.query(sql,[id]);
-
       return result[0];
     } catch (err) {
       console.log(err);
+      return err;
     }
-  
   }
 
   async function getPosts() {
     try {
       const sql = 'SELECT * FROM posts';
-      const [rows, fields] = await pool.query(sql); 
-      console.log("result");
- 
+      const [rows, fields] = await pool.query(sql);  
       return rows;
     } catch (err) {
       console.log(err);
+      return err;
     }
   
   }
@@ -28,26 +26,19 @@ async function getPostsByUserID(id) {
   async function getPost(id) {
     try {
       const sql = 'SELECT * FROM posts where id=?';
-  
       const result = await pool.query(sql, [id]);
-  
       return result[0][0];
-  
     } catch (err) {
-      console.log(err);
+      console.log(err); 
+      return err;
     }
   }
   
-
   async function createPost(user_id, title, body) {
     try {
       const sql = "INSERT INTO posts (`user_id`, `title`,`body`) VALUES(?, ?, ?)";
-    
-  
       const result = await pool.query(sql,[user_id, title, body]);
-  
       return result[0];
-  
     } catch (err) {
       console.log(err);
     }
@@ -56,7 +47,7 @@ async function getPostsByUserID(id) {
   async function deletePost(id) {
     try {
       const sql = `DELETE FROM posts WHERE id = ?`;
-      const result = await pool.query(sql, [id]);
+      await pool.query(sql, [id]);
     } catch (err) {
       console.error('Error deleting post:', err);
       throw err;

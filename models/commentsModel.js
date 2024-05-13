@@ -4,10 +4,10 @@ async function getComments(post_id) {
   try {
     const sql = 'SELECT * FROM comments where post_id=?';
     const result = await pool.query(sql, [post_id]);
-    console.log(result[0]);
     return result[0];
   } catch (err) {
     console.log(err);
+    return err;
   }
 
 }
@@ -22,6 +22,7 @@ async function getComment(id) {
 
   } catch (err) {
     console.log(err);
+    return err;
   }
 }
 
@@ -36,6 +37,7 @@ async function createComment(post_id, name, email, body) {
 
   } catch (err) {
     console.log(err);
+    return err;
   }
 }
 

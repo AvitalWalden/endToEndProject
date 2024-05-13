@@ -11,7 +11,6 @@ async function createPost(user_id, title, body) {
 
 async function getPostsByUserID(id) {
     try {
-        console.log("ukjkgh")
         return model.getPostsByUserID(id);
     } catch (err) {
         throw err;
